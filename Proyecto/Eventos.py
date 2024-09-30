@@ -1,3 +1,5 @@
+# src/eventos.py
+
 class Event:
     def __init__(self, tipo_evento, event_time, proceso):
         self.tipo_evento = tipo_evento  # Ej: 'ARRIVAL', 'FINISH_BURST', 'TIME_SLICE'
