@@ -9,6 +9,7 @@ def round_robin_scheduling(processes, quantum):
             pid = process.pid
             if pid in remaining_bursts:
                 process.estado = "RUNNING"
+                process.start_time = current_time
                 print(f"Ejecutando proceso {pid}. Estado: {process.estado}. Tiempo actual: {current_time}")
                 
                 if remaining_bursts[pid] > quantum:

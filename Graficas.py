@@ -29,6 +29,7 @@ def calculate_metrics(processes, completion_times):
     print(f"Promedio de Tiempo de Respuesta (Response Time): {avg_response}")
 
     visualize_metrics(turnaround_times, waiting_times, response_times, processes)
+    draw_gantt_chart(processes)
 
 def visualize_metrics(turnaround_times, waiting_times, response_times, processes):
     labels = [f"P{process.pid}" for process in processes]
@@ -41,4 +42,19 @@ def visualize_metrics(turnaround_times, waiting_times, response_times, processes
     ax.set_ylabel('Tiempo')
     ax.set_title('Métricas de Planificación de Procesos')
     ax.legend()
+    plt.show()
+
+def draw_gantt_chart(processes):
+    fig, gnt = plt.subplots()
+    gnt.set_ylim(0, len(processes))
+    gnt.set_xlim(0, max(p.completion_time for p in processes) + 1)
+
+    # Agregar las barras para cada proceso
+    for i, process in enumerate(processes):
+        gnt.broken_barh([(process.start_time, process.tiempo_ejecucion)], (i + 0.5, 0.5), facecolors=('orange'))
+
+    gnt.set_xlabel('Tiempo')
+    gnt.set_yticks([i + 0.5 for i in range(len(processes))])
+    gnt.set_yticklabels([f'Proceso {p.pid}' for p in processes])
+    plt.title('Diagrama de Gantt')
     plt.show()

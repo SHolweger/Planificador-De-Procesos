@@ -5,6 +5,7 @@ def sjf_scheduling(processes):
     processes.sort(key=lambda x: x.tiempo_ejecucion)  # Ordenar por tiempo de ráfaga
     for process in processes:
         process.estado = "RUNNING"
+        process.start_time = current_time
         print(f"Ejecutando proceso {process.pid}. Estado: {process.estado}. Tiempo actual: {current_time}")
         current_time += process.tiempo_ejecucion
         process.completion_time = current_time
