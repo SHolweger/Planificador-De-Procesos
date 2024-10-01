@@ -4,10 +4,13 @@ from Priority import priority_scheduling
 from RR import round_robin_scheduling
 from SJF import sjf_scheduling
 from Procesos import Process
+from Recursos import Recurso
 
 def run_simulation():
     print("\n============= Planificador de Procesos ============= ")
 
+    total_recursos = int(input("Ingresa la cantidad total de recursos disponibles: "))
+    recurso = Recurso("Recurso1", total_recursos)
     n = int(input("¿Cuántos procesos desea simular?\n"))
     
     processes = []
@@ -27,22 +30,22 @@ def run_simulation():
     choice = int(input("Ingresa el número de tu elección: "))
 
     if choice == 1:
-        print("\n--- Ejecución FIFO ---")
-        fifo_scheduling(processes)
-        print("\n----------------------")
+        print("\n------- Ejecución FIFO -------")
+        fifo_scheduling(processes, recurso)
+        print("\n------------------------------")
     elif choice == 2:
-        print("\n--- Ejecución SJF ---")
-        sjf_scheduling(processes)
-        print("\n----------------------")
+        print("\n------- Ejecución SJF -------")
+        sjf_scheduling(processes, recurso)
+        print("\n-----------------------------")
     elif choice == 3:
         quantum = int(input("Ingresa valor del Quantum: "))
-        print("\n--- Ejecución Round Robin ---")
-        round_robin_scheduling(processes, quantum)
-        print("\n----------------------")
+        print("\n------- Ejecución Round Robin -------")
+        round_robin_scheduling(processes, quantum, recurso)
+        print("\n-------------------------------------")
     elif choice == 4:
-        print("\n--- Ejecución Prioridad ---")
-        priority_scheduling(processes)
-        print("\n----------------------")
+        print("\n------- Ejecución Prioridad -------")
+        priority_scheduling(processes, recurso)
+        print("\n------------------------------------")
     else:
         print("Opción no válida.")
 

@@ -1,14 +1,15 @@
 import matplotlib.pyplot as plt
 
-def calculate_metrics(processes, completion_times):
+def calculate_metrics(processes):
     turnaround_times = []
     waiting_times = []
     response_times = []
+    completion_times = [p.completion_time for p in processes]
 
     for i, process in enumerate(processes):
         turnaround_time = completion_times[i] - process.tiempo_llegada
         waiting_time = turnaround_time - process.tiempo_ejecucion
-        response_time = waiting_time
+        response_time = process.start_time - process.tiempo_llegada
         
         turnaround_times.append(turnaround_time)
         waiting_times.append(waiting_time)
@@ -40,7 +41,7 @@ def visualize_metrics(turnaround_times, waiting_times, response_times, processes
 
     ax.set_xlabel('Procesos')
     ax.set_ylabel('Tiempo')
-    ax.set_title('Métricas de Planificación de Procesos')
+    ax.set_title('Gráfica de Planificación de Procesos')
     ax.legend()
     plt.show()
 
@@ -49,12 +50,16 @@ def draw_gantt_chart(processes):
     gnt.set_ylim(0, len(processes))
     gnt.set_xlim(0, max(p.completion_time for p in processes) + 1)
 
-    # Agregar las barras para cada proceso
-    for i, process in enumerate(processes):
-        gnt.broken_barh([(process.start_time, process.tiempo_ejecucion)], (i + 0.5, 0.5), facecolors=('orange'))
-
-    gnt.set_xlabel('Tiempo')
+    # Definir el eje Y con base en el número de procesos
     gnt.set_yticks([i + 0.5 for i in range(len(processes))])
     gnt.set_yticklabels([f'Proceso {p.pid}' for p in processes])
-    plt.title('Diagrama de Gantt')
+
+    # Dibujar las barras de cada proceso en el gráfico
+    for i, process in enumerate(processes):
+        start_time = process.start_time
+        duration = process.tiempo_ejecucion
+        gnt.broken_barh([(start_time, duration)], (i, 0.9), facecolors=('orange'))
+
+    gnt.set_xlabel('Tiempo')
+    gnt.set_title('Diagrama de Gantt')
     plt.show()
