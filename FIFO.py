@@ -4,8 +4,8 @@ from Graficas import calculate_metrics
 def fifo_scheduling(processes, recursos):
     current_time = 0
     for process in processes:
-        if recursos.puede_asignar(1):  # Suponiendo que cada proceso necesita 1 recurso
-            recursos.asignar(1)
+        if recursos.asignar(process.recursos_necesarios):  # Se usan los recursos necesarios para ese proceso
+            recursos.liberar(process.recursos_necesarios)  # Al finalizar, se liberan los mismos recursos
             process.set_estado("RUNNING")
             process.start_time = current_time
             print(f"\nEjecutando proceso {process.pid}. \nEstado: {process.estado}. \nTiempo actual: {current_time}")

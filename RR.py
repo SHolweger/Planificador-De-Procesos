@@ -7,8 +7,8 @@ def round_robin_scheduling(processes, quantum, recursos):
 
     while queue:
         for process in queue:
-            if recursos.puede_asignar(1):
-                recursos.asignar(1)
+            if recursos.asignar(process.recursos_necesarios):  # Se usan los recursos necesarios para ese proceso
+                recursos.liberar(process.recursos_necesarios)  # Al finalizar, se liberan los mismos recursos
                 if process.tiempo_restante == process.tiempo_ejecucion:
                     process.set_estado("RUNNING")
                     process.start_time = current_time
