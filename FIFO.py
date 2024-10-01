@@ -1,5 +1,6 @@
+# Función de planificación FIFO con pausas entre procesos
+import time
 from Graficas import calculate_metrics
-
 def fifo_scheduling(processes, recursos):
     current_time = 0
     for process in processes:
@@ -8,7 +9,10 @@ def fifo_scheduling(processes, recursos):
             process.set_estado("RUNNING")
             process.start_time = current_time
             print(f"\nEjecutando proceso {process.pid}. \nEstado: {process.estado}. \nTiempo actual: {current_time}")
+            
+            time.sleep(2)  # Pausa de 2 segundos para simular ejecución
             current_time += process.tiempo_ejecucion
+            
             process.completion_time = current_time
             process.set_estado("TERMINATED")
             recursos.liberar(1)
@@ -21,6 +25,7 @@ def fifo_scheduling(processes, recursos):
     detect_deadlock(processes)
     calculate_metrics(processes)
 
+# Función que detecta si hay interbloqueo en los procesos
 def detect_deadlock(processes):
     blocked_processes = [p for p in processes if p.estado == "BLOCKED"]
     if blocked_processes:

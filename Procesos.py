@@ -1,3 +1,4 @@
+# Clase para gestionar el estado de un proceso
 class Process:
     def __init__(self, pid, tiempo_llegada, tiempo_ejecucion, prioridad=0):
         self.pid = pid
@@ -9,8 +10,9 @@ class Process:
         self.completion_time = None
         self.estado = "NEW"  # Estado inicial
 
+    # Función para cambiar el estado de un proceso
     def set_estado(self, nuevo_estado):
-        print(f"Proceso {self.pid}: \nEstado: {self.estado}.")
+        print(f"Proceso {self.pid}: \nEstado: {self.estado} -> {nuevo_estado}.")
         self.estado = nuevo_estado
         
     def __str__(self):

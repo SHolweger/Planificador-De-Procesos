@@ -39,9 +39,9 @@ def visualize_metrics(turnaround_times, waiting_times, response_times, processes
     ax.plot(labels, waiting_times, label="Tiempo de Espera", marker='o', color='red', linestyle='--')
     ax.plot(labels, response_times, label="Tiempo de Respuesta", marker='o', color='green', linestyle=':')
 
-    ax.set_xlabel('Procesos')
-    ax.set_ylabel('Tiempo')
-    ax.set_title('Gráfica de Planificación de Procesos')
+    ax.set_xlabel('Procesos(X)')
+    ax.set_ylabel('Tiempo(Y)')
+    ax.set_title('Gráfica Lineal - Planificación de Procesos')
     ax.legend()
     plt.show()
 
@@ -60,6 +60,6 @@ def draw_gantt_chart(processes):
         duration = process.tiempo_ejecucion
         gnt.broken_barh([(start_time, duration)], (i, 0.9), facecolors=('orange'))
 
-    gnt.set_xlabel('Tiempo')
+    gnt.set_xlabel('Tiempo (x)')
     gnt.set_title('Diagrama de Gantt')
     plt.show()
