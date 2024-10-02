@@ -4,10 +4,16 @@ def calculate_metrics(processes):
     turnaround_times = []
     waiting_times = []
     response_times = []
-    completion_times = [p.completion_time for p in processes]
+    
+    # Filtrar solo los procesos que han sido completados
+    completed_processes = [p for p in processes if p.completion_time is not None]
 
-    for i, process in enumerate(processes):
-        turnaround_time = completion_times[i] - process.tiempo_llegada
+    if not completed_processes:
+        print("No hay procesos completados para calcular métricas.")
+        return
+    
+    for i, process in enumerate(completed_processes):
+        turnaround_time = process.completion_time - process.tiempo_llegada
         waiting_time = turnaround_time - process.tiempo_ejecucion
         response_time = process.start_time - process.tiempo_llegada
         
@@ -29,8 +35,8 @@ def calculate_metrics(processes):
     print(f"Promedio de Tiempo de Espera (Waiting Time): {avg_waiting}")
     print(f"Promedio de Tiempo de Respuesta (Response Time): {avg_response}")
 
-    visualize_metrics(turnaround_times, waiting_times, response_times, processes)
-    draw_gantt_chart(processes)
+    visualize_metrics(turnaround_times, waiting_times, response_times, completed_processes)
+    draw_gantt_chart(completed_processes)
 
 def visualize_metrics(turnaround_times, waiting_times, response_times, processes):
     labels = [f"P{process.pid}" for process in processes]
